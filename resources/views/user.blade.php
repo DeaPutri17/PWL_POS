@@ -11,24 +11,19 @@
                 <th>Username</th>
                 <th>Nama</th>
                 <th>ID Level Pengguna</th>
+                <th>Aksi</th>
                 {{-- <th>Jumlah Pengguna</th> --}}
             </tr>
-            <tr>
-                <td>{{ $data->user_id }}</td>
-                <td>{{ $data->username }}</td>
-                <td>{{ $data->nama }}</td>
-                <td>{{ $data->level_id }}</td>
-                {{-- <td>{{ $data }} --}}
-            </tr>
-            {{-- @foreach ($data as $d)
+            @foreach ($data as $d)
             <tr>
                 <td>{{ $d->user_id }}</td>
                 <td>{{ $d->username }}</td>
                 <td>{{ $d->nama }}</td>
                 <td>{{ $d->level_id }}</td>
+                <td><a href="/PWL_POS/public/user/ubah/{{ $d->user_id }}">Ubah</a> | 
+                    <a href="/PWL_POS/public/user/hapus/{{ $d->user_id }}">Hapus</a></td>
             </tr>
-            @endforeach --}}
-
+            @endforeach
         </table>
     </body>
 </html>
