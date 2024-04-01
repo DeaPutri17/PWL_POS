@@ -327,6 +327,19 @@ return [
             'text' => 'Kategori',
             'url' => 'kategori',
             'icon' => 'fas fa-fw list-alt',
+            'label_color' => 'success',
+        ],
+        [
+            'text' => 'User',
+            'url' => 'user',
+            'icon' => 'fas fa-fw list-alt',
+            'label_color' => 'success',
+        ],
+        [
+            'text' => 'Level',
+            'url' => 'level',
+            'icon' => 'fas fa-fw list-alt',
+            'label_color' => 'success',
         ],
         ['header' => 'account_settings'],
         [

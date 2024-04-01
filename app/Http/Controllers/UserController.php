@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\UserDataTable;
 use Illuminate\Http\Request;
 use App\Models\UserModel;
 use Illuminate\Support\Facades\Hash;
@@ -9,17 +10,15 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class UserController extends Controller
 {
     
-    public function index(){
-            
-            $user = UserModel::with('level')->get();
-            return view('user', ['data' => $user]);
+    public function index(UserDataTable $dataTable){
+            return $dataTable->render('user.index');
     }
 
-    public function tambah(){
-        return view('user_tambah');
+    public function create(){
+        return view('user.create');
     }
 
-    public function tambah_simpan(Request $request){
+    public function store(Request $request){
         UserModel::create([
             'username' => $request->username,
             'nama' => $request->nama,
@@ -30,12 +29,12 @@ class UserController extends Controller
         return redirect('/user');
     }
 
-    public function ubah($id){
+    public function edit($id){
         $user = UserModel::find($id);
-        return view('user_ubah', ['data' => $user]);
+        return view('user.edit', ['data' => $user]);
     }
 
-    public function ubah_simpan($id, Request $request){
+    public function storeEdit($id, Request $request){
         $user = UserModel::find($id);
 
         $user->username = $request->username;
