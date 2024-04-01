@@ -19,11 +19,19 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="kodeKategori">Kode Kategori</label>
-                        <input type="text" class="form-control" id="kodeKategori" name="kodeKategori" value="{{ $data->kategori_kode }}">
+                        <input id = "kategori_kode" type="text" class="@error('kategori_kode') is-invalid @enderror" value="{{ $data->kategori_kode }}">
+
+                        @error('kategori_kode')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="namaKategori">Nama Kategori</label>
-                        <input type="text" class="form-control" id="namaKategori" name="namaKategori" value="{{ $data->kategori_nama }}">
+                        <input id = "kategori_nama" type="text" class="@error('kategori_nama') is-invalid @enderror" value="{{ $data->kategori_nama }}">
+
+                        @error('kategori_nama')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
 

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\UserModel;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\RedirectResponse;
+
 class UserController extends Controller
 {
     
@@ -18,7 +20,13 @@ class UserController extends Controller
         return view('user.create');
     }
 
-    public function store(Request $request){
+    public function store(Request $request):RedirectResponse{
+        $validated = $request->validate([
+            'username' => 'bail|required|unique:post|max:255',
+            'nama' => 'bail|required|unique:post|max:255',
+            'password' => 'bail|required|unique:post|max:255',
+            'level_id' => 'bail|required|unique:post|max:255',
+        ]);
         UserModel::create([
             'username' => $request->username,
             'nama' => $request->nama,
