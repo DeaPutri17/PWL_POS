@@ -4,6 +4,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\POSController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WelcomeController;
 use App\Models\KategoriModel;
 use Illuminate\Support\Facades\Route;
 
@@ -53,3 +54,5 @@ Route::put('/level/{id}', [LevelController::class, 'storeEdit']);
 Route::get('/level/hapus/{id}', [LevelController::class, 'hapus']);
 
 Route::resource('m_user', POSController::class);
+
+Route::get('/', [WelcomeController::class, 'index']);
