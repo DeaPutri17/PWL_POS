@@ -75,8 +75,8 @@ class KategoriController extends Controller
     //Menyimpan data kategori baru
     public function store(Request $request){
         $request->validate([
-            //kategori_kode harus diisi, berupa string minimal 2 karakter, dan bernilai unik di tabel m_kategori kolom kategori_kode
-            'kategori_kode' => 'required|string|min:2|unique:m_kategori,kategori_kode',
+            //kategori_kode harus diisi, berupa string minimal 3 karakter, dan bernilai unik di tabel m_kategori kolom kategori_kode
+            'kategori_kode' => 'required|string|min:3|unique:m_kategori,kategori_kode',
             'kategori_nama' => 'required|string|max:100',  //nama harus diisi, berupa string, dan maksimal 100 karakter
         ]);
 
@@ -128,8 +128,8 @@ class KategoriController extends Controller
     public function update(Request $request, string $id){
 
         $request->validate([
-            //kategori_kode harus diisi, berupa string minimal 2 karakter, dan bernilai unik di tabel m_kategori kolom kategori_kode
-            'kategori_kode' => 'required|string|min:2|unique:m_kategori,kategori_kode,'.$id .',kategori_id',
+            //kategori_kode harus diisi, berupa string minimal 3 karakter, dan bernilai unik di tabel m_kategori kolom kategori_kode
+            'kategori_kode' => 'required|string|min:3|unique:m_kategori,kategori_kode,'.$id .',kategori_id',
             'kategori_nama' => 'required|string|max:100',  //nama harus diisi, berupa string, dan maksimal 100 karakter
         ]);
 
