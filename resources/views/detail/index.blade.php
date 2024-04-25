@@ -45,7 +45,7 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            var dataUser = $('#table_detailPenjualan').DataTable({
+            var dataDetail = $('#table_detailPenjualan').DataTable({
                 serverSide: true,
                 ajax: {
                     "url": "{{ url('detail/list') }}",
