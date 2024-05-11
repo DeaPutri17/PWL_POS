@@ -5,107 +5,98 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
-                <a class="btn btn-sm btn-primary mt-1" href="{{ url('detail/create') }}">Tambah</a>
+                <a class="btn btn-sm btn-primary mt-1" href="{{ url('detail/create') }}">Tambah Transaksi</a>
             </div>
         </div>
-    <div class="card-body">
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-        @if (session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
-        @endif
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group row">
-                    <label class="col-1 control-label col-form-label">Filter:</label>
-                    <div class="col-3">
-                        <select class="form-control" id="penjualan_id" name="penjualan_id" required>
-                            <option value="">- Semua -</option>
-                            @foreach ($penjualan as $item)
-                                <option value="{{ $item->penjualan_id }}">{{ $item->penjualan_id }}</option>
-                            @endforeach
-                        </select>
-                        <small class="form-text text-muted">Penjualan ID</small>
+        <div class="card-body">
+            @if (session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger">{{ session('error') }}</div>
+            @endif
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <label class="col-1 control-label col-form-label">Filter</label>
+                        <div class="col-3">
+                            <select class="form-control" id="user_id" name="user_id" required>
+                                <option value="">- Semua -</option>
+                                @foreach ($user as $item)
+                                    <option value="{{ $item->user_id }}">{{ $item->username }}</option>
+                                @endforeach
+                            </select>
+                            <small class="form-text text-muted">User</small>
+                        </div>
                     </div>
                 </div>
             </div>
+            <table class="table table-bordered table-striped table-hover table-sm" id="table_penjualan">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>Kode Penjualan</th>
+                        <th>Pembeli</th>
+                        <th>Tanggal Penjualan</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+            </table>
         </div>
-        <table class="table table-bordered table-striped table-hover table-sm"id="table_detailPenjualan">
-            <thead>
-                <tr><th>Detail ID</th><th>Penjualan ID</th><th>Nama Pembeli</th><th>Barang</th><th>Harga</th><th>Jumlah</th><th>Total</th><th>Aksi</th></tr>
-            </thead>
-        </table>
-    </div>
     </div>
 @endsection
 
 @push('css')
 @endpush
+
 @push('js')
     <script>
         $(document).ready(function() {
-            var dataDetail = $('#table_detailPenjualan').DataTable({
-                serverSide: true,
+            var dataPenjualan = $('#table_penjualan').DataTable({
+                serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
                 ajax: {
                     "url": "{{ url('detail/list') }}",
                     "dataType": "json",
                     "type": "POST",
-                    "data": function (d){
-                        d.penjualan_id = $('#penjualan_id').val();
+                    "data": function(d) {
+                        d.user_id = $('#user_id').val();
                     }
                 },
-                columns: [
-                    {
-                        data: "detail_id", // nomor urut dari laravel datatable addIndexColumn()
-                        className: "text-center",
-                        orderable: false,
-                        searchable: false
-                    },{
-                        data: "penjualan.penjualan_id", 
-                        className: "",
-                        orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
-                        searchable: true // searchable: true, jika ingin kolom ini bisa dicari
-                    },{
-                        data: "penjualan.pembeli", 
-                        className: "",
-                        orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
-                        searchable: true // searchable: true, jika ingin kolom ini bisa dicari
-                    },{
-                        data: "barang.barang_nama", 
-                        className: "",
-                        orderable: false, // orderable: true, jika ingin kolom ini bisa diurutkan
-                        searchable: true // searchable: true, jika ingin kolom ini bisa dicari
-                    },{
-                        data: "harga", 
-                        className: "",
-                        orderable: false, // orderable: true, jika ingin kolom ini bisa diurutkan
-                        searchable: false // searchable: true, jika ingin kolom ini bisa dicari
-                    },{
-                        data: "jumlah", 
-                        className: "",
-                        orderable: false, // orderable: true, jika ingin kolom ini bisa diurutkan
-                        searchable: false // searchable: true, jika ingin kolom ini bisa dicari
-                    },{
-                        data: null, 
-                        className: "",
-                        orderable: false,
-                        searchable: false,
-                        render: function(data, type, row) {
-                            // Menghitung total dengan mengalikan harga dan jumlah
-                            return row.harga * row.jumlah;
-                        }
-                    },{
-                        data: "aksi", 
-                        className: "",
-                        orderable: false, // orderable: true, jika ingin kolom ini bisa diurutkan
-                        searchable: false // searchable: true, jika ingin kolom ini bisa dicari
-                    }
-                ]
+                columns: [{
+                    data: "DT_RowIndex", // nomor urut dari laravel datatable
+                    className: "text-center",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "user.username",
+                    className: "",
+                    orderable: true, // orderable: true, jika ingin kolom ini bisa
+                    searchable: true // searchable: true, jika ingin kolom ini bisa
+                }, {
+                    data: "penjualan_kode",
+                    className: "",
+                    orderable: true, // orderable: true, jika ingin kolom ini bisa
+                    searchable: true // searchable: true, jika ingin kolom ini bisa
+                }, {
+                    data: "pembeli",
+                    className: "",
+                    orderable: true, // orderable: true, jika ingin kolom ini bisa
+                    searchable: true // searchable: true, jika ingin kolom ini bisa
+                }, {
+                    data: "penjualan_tanggal",
+                    className: "",
+                    orderable: true, // orderable: true, jika ingin kolom ini bisa
+                    searchable: true // searchable: true, jika ingin kolom ini bisa
+                }, {
+                    data: "aksi",
+                    className: "",
+                    orderable: false,
+                    searchable: false
+                }]
             });
-
-            $('#penjualan_id').on('change', function(){
-                dataDetail.ajax.reload();
+            $('#user_id').on('change', function() {
+                dataPenjualan.ajax.reload();
             });
         });
     </script>

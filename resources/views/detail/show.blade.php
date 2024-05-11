@@ -3,48 +3,91 @@
 @section('content')
     <div class="card card-outline card-primary">
         <div class="card-header">
-        <h3 class="card-title">{{ $page->title }}</h3>
+            <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools"></div>
-    </div>
-    <div class="card-body">
-        @empty($detail)
-            <div class="alert alert-danger alert-dismissible">
-            <h5><i class="icon fas fa-ban"></i> Kesalahan!</h5>
-            Data yang Anda cari tidak ditemukan.
-            </div>
-        @else
-            <table class="table table-bordered table-striped table-hover table-sm">
-                <tr>
-                    <th>Detail ID</th>
-                    <td>{{ $detail->detail_id }}</td>
-                </tr>
-                <tr>
-                    <th>Pembeli</th>
-                    <td>{{ $detail->penjualan->pembeli }}</td>
-                </tr>
-                <tr>
-                    <th>Barang</th>
-                    <td>{{ $detail->barang->barang_nama }}</td>
-                </tr>
-                <tr>
-                    <th>Harga</th>
-                    <td>{{ $detail->harga }}</td>
-                </tr>
-                <tr>
-                    <th>Jumlah</th>
-                    <td>{{ $detail->jumlah }}</td>
-                </tr>
-                <tr>
-                    <th>Total</th>
-                    <td>{{ $detail->harga* $detail->jumlah }}</td>
-                </tr>
-            </table>
-        @endempty
-        <a href="{{ url('detail') }}" class="btn btn-sm btn-default mt-2">Kembali</a>
+        </div>
+        <div class="card-body">
+            @empty($detail)
+                <div class="alert alert-danger alert-dismissible">
+                    <h5><i class="icon fas fa-ban"></i> Kesalahan!</h5>
+                    Data yang Anda cari tidak ditemukan.
+                </div>
+            @else
+                <table class="table table-bordered table-striped table-hover tablesm">
+                    <tr>
+                        <th>ID</th>
+                        <td>{{ $detail->penjualan_id }}</td>
+                    </tr>
+                    <tr>
+                        <th>User</th>
+                        <td>{{ $detail->user->username }}</td>
+                    </tr>
+                    <tr>
+                        <th>Kode Penjualan</th>
+                        <td>{{ $detail->penjualan_kode }}</td>
+                    </tr>
+                    <tr>
+                        <th>Pembeli</th>
+                        <td>{{ $detail->pembeli }}</td>
+                    </tr>
+                    <tr>
+                        <th>Tanggal Penjualan</th>
+                        <td>{{ $detail->penjualan_tanggal }}</td>
+                    </tr>
+                </table>
+            @endempty
+            <br>
+        </div>
+        <div class="card-header">
+            <h3 class="card-title">Detail Penjualan Barang</h3>
+            <div class="card-tools"></div>
+        </div>
+        <div class="card-body">
+            @empty($penjualan_detail)
+                <div class="alert alert-danger alert-dismissible">
+                    <h5><i class="icon fas fa-ban"></i> Kesalahan!</h5>
+                    Data yang Anda cari tidak ditemukan.
+                </div>
+            @else
+                <table class="table table-bordered table-striped table-hover tablesm">
+                    <tr>
+                        <th>No</th>
+                        <th>Barang </th>
+                        <th>Jumlah</th>
+                        <th>Harga</th>
+                        <th>Sub-Total</th>
+                    </tr>
+
+                    <?php $no = 1; ?>
+                    <?php $total = 0; ?>
+
+                    @foreach ($penjualan_detail as $pd)
+                        <tr>
+                            <td>{{ $no++ }}</td>
+                            <td>{{ $pd->barang->barang_nama }}</td>
+                            <td>{{ $pd->jumlah }}</td>
+                            <td>{{ $pd->harga }}</td>
+                            <td>{{ $pd->harga * $pd->jumlah }}</td>
+                        </tr>
+                        <?php $total += $pd->harga * $pd->jumlah; ?>
+                    @endforeach
+                </table>
+
+                <div class="card-body">
+                    <div class="font-weight-bolder">Total :
+                        <span>{{ Number::currency($total, 'Rp.') }}</span>
+                    </div>
+                </div>
+            @endempty
+            <br>
+            <a href="{{ url('detail') }}" class="btn btn-default mt2">Kembali</a>
+        </div>
     </div>
     </div>
 @endsection
+
 @push('css')
 @endpush
+
 @push('js')
 @endpush
