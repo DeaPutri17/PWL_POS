@@ -73,8 +73,8 @@ class DetailPenjualanController extends Controller
         $barang = BarangModel::all(); //ambil data barang untuk ditampilkan di form
         $activeMenu = 'detail'; //set menu yang sedang aktif
 
-        $counter = (PenjualanModel::selectRaw("CAST(RIGHT(penjualan_kode, 3) AS UNSIGNED) AS counter")->orderBy('penjualan_id', 'desc')->value('counter')) + 1;
-        $penjualan_kode = 'PJ' . sprintf("%04d", $counter);
+        $counter = (PenjualanModel::selectRaw("CAST(SUBSTRING(penjualan_kode, 2) AS UNSIGNED) AS counter")->orderBy('penjualan_id', 'desc')->value('counter')) + 1;
+        $penjualan_kode = 'p' . $counter;
         $total = 0;
 
         return view('detail.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'user' => $user, 'barang' => $barang, 'penjualan_kode' =>$penjualan_kode, 'activeMenu' => $activeMenu, 'date' => date("Y-m-d"),
