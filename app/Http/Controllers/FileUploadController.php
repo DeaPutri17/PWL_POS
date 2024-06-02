@@ -48,4 +48,28 @@ class FileUploadController extends Controller
         //     echo "Tidak ada berkas yang diupload";
         // }
     }
+
+    public function fileUploadRename(){
+        return view('file-upload-rename');
+    }
+
+    public function prosesFileUploadRename(Request $request){
+        $request->validate([
+            'berkas'=>'required|file|image|max:500',
+        ]);
+
+        $ext_file = $request->berkas->getClientOriginalExtension();
+
+        $nama_file = $request->input('namaFile');
+        $namaFile = $nama_file .time() ."." .$ext_file;
+
+        $path = $request->berkas->move('gambar', $namaFile);
+        $path = str_replace("\\","//",$path);
+
+        $pathBaru = asset('gambar/' . $namaFile);
+
+        echo "Gambar berhasil diupload di <a href='$pathBaru'>$nama_file.$ext_file</a>";
+        echo "<br><br>";
+        echo "<img src='$pathBaru' alt='Gambar' style='max-width: 500px; max-height: 500px;'>";
+    }
 }
